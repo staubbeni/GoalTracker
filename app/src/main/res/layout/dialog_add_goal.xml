@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/goal_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cél neve" />
+
+    <EditText
+        android:id="@+id/goal_desc_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Leírás" />
+
+    <Button
+        android:id="@+id/save_goal_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mentés" />
+</LinearLayout>
