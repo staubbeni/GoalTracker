@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GoalTracker</string>
+    <string name="c_l_neve">Cél neve</string>
+    <string name="t_rl_s">Törlés</string>
 </resources>
