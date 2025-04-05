@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
@@ -46,6 +47,23 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
             goalsList.remove(position);
             notifyItemRemoved(position);
             listener.onGoalDeleted();
+        });
+
+        holder.itemView.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
+            View dialogView = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.dialog_goal_details, null);
+            builder.setView(dialogView);
+
+            TextView nameText = dialogView.findViewById(R.id.goal_name_text);
+            TextView descText = dialogView.findViewById(R.id.goal_desc_text);
+            Button closeButton = dialogView.findViewById(R.id.close_button);
+
+            nameText.setText(goal.getName());
+            descText.setText(goal.getDescription());
+
+            AlertDialog dialog = builder.create();
+            closeButton.setOnClickListener(v1 -> dialog.dismiss());
+            dialog.show();
         });
     }
 

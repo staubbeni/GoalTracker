@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "GoalTracker.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Verzió növelése az adatbázis frissítéséhez
     private static final String TABLE_USERS = "users";
     private static final String TABLE_GOALS = "goals";
 
@@ -18,15 +18,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT, nickname TEXT, birth_date TEXT)");
         db.execSQL("CREATE TABLE " + TABLE_GOALS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, name TEXT, description TEXT, completed INTEGER)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_GOALS);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_USERS + " ADD COLUMN nickname TEXT");
+            db.execSQL("ALTER TABLE " + TABLE_USERS + " ADD COLUMN birth_date TEXT");
+        }
     }
 
     public boolean insertUser(String email, String password) {
@@ -49,6 +50,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return -1;
+    }
+
+    public boolean updateUser(int userId, String email, String password, String nickname, String birthDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("email", email);
+        values.put("password", password);
+        values.put("nickname", nickname);
+        values.put("birth_date", birthDate);
+        int rows = db.update(TABLE_USERS, values, "id = ?", new String[]{String.valueOf(userId)});
+        db.close();
+        return rows > 0;
+    }
+
+    public Cursor getUser(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT email, password, nickname, birth_date FROM " + TABLE_USERS + " WHERE id = ?", new String[]{String.valueOf(userId)});
     }
 
     public boolean insertGoal(int userId, String name, String description) {
