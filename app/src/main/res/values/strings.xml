@@ -2,4 +2,8 @@
     <string name="app_name">GoalTracker</string>
     <string name="c_l_neve">Cél neve</string>
     <string name="t_rl_s">Törlés</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="statisztika">Statisztika</string>
+    <string name="statisztika_bet_lt_se">Statisztika betöltése...</string>
 </resources>

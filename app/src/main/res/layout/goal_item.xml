@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="16dp"
     app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/surface"
     android:layout_margin="8dp">
 
     <LinearLayout
@@ -16,23 +17,24 @@
         <CheckBox
             android:id="@+id/goal_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/accent"/>
 
         <TextView
             android:id="@+id/goal_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/c_l_neve"
+            android:text="Cél neve"
             android:textSize="16sp"
-            android:textColor="#212121"/>
+            android:textColor="@color/text_primary"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/t_rl_s"
-            android:textColor="#D32F2F"
+            android:text="Törlés"
+            android:textColor="#FF5252"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
