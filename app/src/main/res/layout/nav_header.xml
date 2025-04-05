@@ -15,10 +15,4 @@
         android:textColor="@color/accent"
         android:layout_marginBottom="8dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Felhasználó neve"
-        android:textSize="14sp"
-        android:textColor="@color/text_secondary"/>
 </LinearLayout>

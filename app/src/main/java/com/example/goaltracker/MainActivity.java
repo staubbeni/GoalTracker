@@ -1,6 +1,7 @@
 package com.example.goaltracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -112,12 +113,16 @@ public class MainActivity extends AppCompatActivity implements GoalAdapter.GoalA
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home) {
-            // Már itt vagyunk
         } else if (id == R.id.nav_stats) {
             Intent intent = new Intent(this, StatsActivity.class);
             intent.putExtra("userId", userId);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
+            SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isLoggedIn", false);
+            editor.apply();
+
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();

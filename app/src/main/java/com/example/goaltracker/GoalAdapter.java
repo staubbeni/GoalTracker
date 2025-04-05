@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder> {
-    private ArrayList<Goal> goals;
+    private ArrayList<Goal> goalsList;
     private DatabaseHelper db;
     private GoalAdapterListener listener;
 
@@ -18,8 +18,8 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         void onGoalDeleted();
     }
 
-    public GoalAdapter(ArrayList<Goal> goals, DatabaseHelper db, GoalAdapterListener listener) {
-        this.goals = goals;
+    public GoalAdapter(ArrayList<Goal> goalsList, DatabaseHelper db, GoalAdapterListener listener) {
+        this.goalsList = goalsList;
         this.db = db;
         this.listener = listener;
     }
@@ -32,17 +32,18 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
 
     @Override
     public void onBindViewHolder(GoalViewHolder holder, int position) {
-        Goal goal = goals.get(position);
+        Goal goal = goalsList.get(position);
         holder.goalName.setText(goal.getName());
         holder.goalCheckbox.setChecked(goal.isCompleted());
+
         holder.goalCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                db.completeGoal(goal.getId());
-            }
+            goal.setCompleted(isChecked);
+            db.updateGoal(goal.getId(), isChecked);
         });
+
         holder.deleteButton.setOnClickListener(v -> {
             db.deleteGoal(goal.getId());
-            goals.remove(position);
+            goalsList.remove(position);
             notifyItemRemoved(position);
             listener.onGoalDeleted();
         });
@@ -50,7 +51,7 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
 
     @Override
     public int getItemCount() {
-        return goals.size();
+        return goalsList.size();
     }
 
     public static class GoalViewHolder extends RecyclerView.ViewHolder {
